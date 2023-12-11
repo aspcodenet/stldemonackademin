@@ -54,7 +54,68 @@ private:
 // C++ 20 
 // coolest thing ever in C++ = views 
 
+// int largestOfThree(int i, int j, int k){
+//     if(i > j && i > k){
+//         return i;
+//     }
+//     if(j > i && j > k){
+//         return j;
+//     }
+//     return k;
+// }
+
+// float largestOfThree(float i, float j, float k){
+//     if(i > j && i > k){
+//         return i;
+//     }
+//     if(j > i && j > k){
+//         return j;
+//     }
+//     return k;
+// }
+
+
+// std::string largestOfThree(std::string i, std::string j, std::string k){
+//     if(i > j && i > k){
+//         return i;
+//     }
+//     if(j > i && j > k){
+//         return j;
+//     }
+//     return k;
+// }
+
+
+
+template<typename T>
+T largestOfThree(T i, T j, T k){
+    if(i > j && i > k){
+        return i;
+    }
+    if(j > i && j > k){
+        return j;
+    }
+    return k;
+}
+
+template<typename T, int size>
+class MySuperDuperArray{
+public:    
+private:
+    T arrayen[size];
+};
+
+
+
 int main(){
+    MySuperDuperArray<int,10> hej;
+    MySuperDuperArray<float,15> hej2;
+    MySuperDuperArray<Movie,100> movies;
+
+
+    int a = largestOfThree(12,34,56);
+    float f = largestOfThree(12.11f,34.22f,56.123f);
+    std::string l = largestOfThree<std::string>("Stefan","asdasd","234234342");
     std::vector<Movie> greatMovies{
         Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,40), // <- begin
         Movie("Fast and Furious 7",2014,Movie::MovieType::MovieType_Film,99),  // <-items
@@ -70,6 +131,20 @@ int main(){
     for(auto &m : greatMovies ){
         std::cout << m.getName() << std::endl;
     }
+
+    // Ta fram och skriv ut alla som kostar mindre än 90 kr
+    auto i = std::begin(greatMovies),end = std::end(greatMovies);
+    while(i != end){
+        i = std::find_if(i,end,[](auto const &m){
+            return m.getPrice() < 90;
+        });
+        // hello
+        if(i != end){
+            std::cout << i->getName() << std::endl;
+            //i = std::next(i);
+            i++;
+        }
+    }    
 
 
     // bool any2000 = std::ranges::any_of(greatMovies,[](const Movie &m){
