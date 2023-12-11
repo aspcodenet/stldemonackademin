@@ -5,6 +5,15 @@
 #include <numeric>
 #include <ranges>
 
+struct ChristmasWish{
+    std::string Name;
+    int Price;
+    ChristmasWish(std::string name, int price){
+        Name = name;
+        Price = price;
+    }        
+};
+
 
 class Movie{
 public:
@@ -123,11 +132,30 @@ int main(){
         Movie("Fast & Furious Presents: Hobbs & Shaw",2019,Movie::MovieType::MovieType_Film,88),
        Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
     };    
+    
+
+    auto result2 = greatMovies | std::views::filter([](const Movie &m){
+        std::cout << "In filter" << std::endl;
+        return m.getPrice() < 90;
+    }) | std::views::transform([](const Movie &m){
+          return ChristmasWish(m.getName(), m.getPrice());
+    });
+    for(auto wish: result2){
+        std::cout << wish.Name << std::endl;
+    }
 
 
-    std::sort(std::begin(greatMovies),std::end(greatMovies),[](const Movie &item1, const Movie &item2){
+
+
+
+    std::ranges::sort(greatMovies,[](const Movie &item1, const Movie &item2){
         return item1.getPrice() < item2.getPrice();        
     });
+
+
+    // std::sort(std::begin(greatMovies),std::end(greatMovies),[](const Movie &item1, const Movie &item2){
+    //     return item1.getPrice() < item2.getPrice();        
+    // });
     for(auto &m : greatMovies ){
         std::cout << m.getName() << std::endl;
     }
